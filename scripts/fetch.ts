@@ -1,4 +1,3 @@
-/* eslint-disable no-console */
 import 'dotenv/config'
 import process from 'node:process'
 import fs from 'node:fs/promises'
@@ -10,6 +9,7 @@ import { $fetch } from 'ofetch'
 const BASE_URL = 'https://api.unsplash.com'
 const COLLECTION_ID = '94734566'
 const DIR_DOWNLOADS = 'downloads'
+const DIR_ASSETS = 'assets'
 const USE_CACHE = true
 
 if (!process.env.UNSPLASH_ACCESS_KEY)
@@ -43,6 +43,7 @@ else {
 }
 
 await fs.mkdir(DIR_DOWNLOADS, { recursive: true })
+await fs.mkdir(DIR_ASSETS, { recursive: true })
 
 console.log(photos)
 console.log('Collection:', `https://unsplash.com/collections/${COLLECTION_ID}`)
@@ -51,12 +52,12 @@ console.log('Total photos:', photos.length)
 await fs.writeFile(join(DIR_DOWNLOADS, 'raw.json'), JSON.stringify(photos, null, 2), 'utf8')
 
 for (const photo of photos) {
-  await fs.writeFile(join(DIR_DOWNLOADS, `${photo.id}.md`), [
+  await fs.writeFile(join(DIR_ASSETS, `${photo.id}.md`), [
     `Photo by [${photo.user.name}](${photo.user.links.html})`,
     '',
     photo.description,
     '',
-    `[![${photo.id}](./${photo.id}.png)](${photo.links.html})`,
+    `[![${photo.id}](./${photo.id}.webp)](${photo.links.html})`,
   ].join('\n'), 'utf8')
 }
 

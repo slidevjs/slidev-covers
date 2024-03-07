@@ -1,3 +1,5 @@
 node_modules
 .env
 downloads
+.nitro
+.DS_Store
