@@ -6,17 +6,17 @@ import sharp from 'sharp'
 
 const files = await fg('downloads/*.png', { onlyFiles: true })
 
-await fs.mkdir('./assets', { recursive: true })
-await fs.writeFile('./assets/index.json', JSON.stringify(files.map(i => basename(i, '.png')), null, 2), 'utf8')
+await fs.mkdir('./static', { recursive: true })
+await fs.writeFile('./static/index.json', JSON.stringify(files.map(i => basename(i, '.png')), null, 2), 'utf8')
 
 for (const file of files) {
-  const targetFile = join('assets', `${basename(file, '.png')}.webp`)
+  const targetFile = join('static', `${basename(file, '.png')}.webp`)
   if (existsSync(targetFile)) {
     console.log('Skipping:', targetFile)
     continue
   }
 
-  // read the image file, resize it to 1920x1080, compress it, and save it to `assets/` folder
+  // read the image file, resize it to 1920x1080, compress it, and save it to `static/` folder
   const info = await sharp(file)
     .resize(1920, 1080)
     .toFormat('webp', { quality: 80 })

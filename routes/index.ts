@@ -1,4 +1,4 @@
-import ids from '../assets/index.json'
+import ids from '../static/index.json'
 
 export default defineEventHandler((event) => {
   const index = Math.floor(Math.random() * ids.length)
